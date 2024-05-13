@@ -78,6 +78,7 @@
         background-color: #b71c1c;
         color: #ffffff;
         font-weight: bold;
+        margin-top: 5px;
       }
       button.second {
         padding: 4px 8px;
@@ -107,6 +108,8 @@
     <header></header>
     <main>
       <select id="opcao">
+
+        <option value="personagens">Personagens</option>
         <option value="itens">Itens</option>
         <option value="lugares">Lugares</option>
         <option value="ermos">Ermos</option>
@@ -115,6 +118,35 @@
         <option value="issues">Issues</option>
         <option value="scavenging">Scavenging</option>
         <option value="walkers">Walkers</option>
+
+        <option value="lugares#vestibulo">Vestíbulo</option>
+				<option value="lugares#escritorio">Escritório</option>
+				<option value="lugares#quarto">Quarto</option>
+				<option value="lugares#quarto_de_crianca">Quarto de Criança</option>
+				<option value="lugares#sala">Sala</option>
+				<option value="lugares#cozinha">Cozinha</option>
+				<option value="lugares#corredor">Corredor</option>
+				<option value="lugares#sala_de_jantar">Sala de Jantar</option>
+				<option value="lugares#biblioteca">Biblioteca</option>
+				<option value="lugares#jardim">Jardim</option>
+				<option value="lugares#area_externa">Área Externa</option>
+				<option value="lugares#banheiro">Banheiro</option>
+				<option value="lugares#laboratorio">Laboratório</option>
+				<option value="lugares#sala_tecnologica">Sala Tecnológica</option>
+				<option value="lugares#estoque">Estoque</option>
+				<option value="lugares#entrada">Entrada</option>
+				<option value="lugares#sala_de_energia">Sala de Energia</option>
+				<option value="lugares#sala_de_artes">Sala de Artes</option>
+				<option value="lugares#lobby">Lobby</option>
+				<option value="lugares#sala_de_apoio">Sala de Apoio</option>
+				<option value="lugares#enfermaria">Enfermaria</option>
+				<option value="lugares#crematorio">Crematório</option>
+				<option value="lugares#sala_secreta">Sala Secreta</option>
+				<option value="lugares#hall">Hall</option>
+				<option value="lugares#restaurante">Restaurante</option>
+				<option value="lugares#bar">Bar</option>
+				<option value="lugares#bercario">Berçario</option>
+
       </select>
       <span>Quantidade</span>
       <input type="number" id='quantidade' value='1'>
@@ -125,10 +157,44 @@
         <button class="second" type="button" id="rolar-scavenging">Scavenging</button>
         <button class="second" type="button" id="rolar-issues">Issues</button>
         <button class="second" type="button" id="rolar-npc">NPCs</button>
+        <button class="second" type="button" id="rolar-personagens">Personagens</button>
+      </div>
+
+      <div class="botoes">
         <button class="second" type="button" id="rolar-orla">Orla</button>
         <button class="second" type="button" id="rolar-ermos">Ermos</button>
         <button class="second" type="button" id="rolar-lugares">Lugares</button>
         <button class="second" type="button" id="rolar-itens">Itens</button>
+      </div>
+
+      <div class="botoes">
+				<button class="second" type="button" id="rolar-lugares#vestibulo">Vestíbulo</button>
+				<button class="second" type="button" id="rolar-lugares#escritorio">Escritório</button>
+				<button class="second" type="button" id="rolar-lugares#quarto">Quarto</button>
+				<button class="second" type="button" id="rolar-lugares#quarto_de_crianca">Quarto de Criança</button>
+				<button class="second" type="button" id="rolar-lugares#sala">Sala</button>
+				<button class="second" type="button" id="rolar-lugares#cozinha">Cozinha</button>
+				<button class="second" type="button" id="rolar-lugares#corredor">Corredor</button>
+				<button class="second" type="button" id="rolar-lugares#sala_de_jantar">Sala de Jantar</button>
+				<button class="second" type="button" id="rolar-lugares#biblioteca">Biblioteca</button>
+				<button class="second" type="button" id="rolar-lugares#jardim">Jardim</button>
+				<button class="second" type="button" id="rolar-lugares#area_externa">Área Externa</button>
+				<button class="second" type="button" id="rolar-lugares#banheiro">Banheiro</button>
+				<button class="second" type="button" id="rolar-lugares#laboratorio">Laboratório</button>
+				<button class="second" type="button" id="rolar-lugares#sala_tecnologica">Sala Tecnológica</button>
+				<button class="second" type="button" id="rolar-lugares#estoque">Estoque</button>
+				<button class="second" type="button" id="rolar-lugares#entrada">Entrada</button>
+				<button class="second" type="button" id="rolar-lugares#sala_de_energia">Sala de Energia</button>
+				<button class="second" type="button" id="rolar-lugares#sala_de_artes">Sala de Artes</button>
+				<button class="second" type="button" id="rolar-lugares#lobby">Lobby</button>
+				<button class="second" type="button" id="rolar-lugares#sala_de_apoio">Sala de Apoio</button>
+				<button class="second" type="button" id="rolar-lugares#enfermaria">Enfermaria</button>
+				<button class="second" type="button" id="rolar-lugares#crematorio">Crematório</button>
+				<button class="second" type="button" id="rolar-lugares#sala_secreta">Sala Secreta</button>
+				<button class="second" type="button" id="rolar-lugares#hall">Hall</button>
+				<button class="second" type="button" id="rolar-lugares#restaurante">Restaurante</button>
+				<button class="second" type="button" id="rolar-lugares#bar">Bar</button>
+				<button class="second" type="button" id="rolar-lugares#bercario">Berçario</button>
       </div>
 
       <div class="botoes">
@@ -139,7 +205,8 @@
       </div>
     </main>
 
-
+    <script type="text/javascript" src="scripts/lugares.js"></script>
+    <script type="text/javascript" src="scripts/personagens.js"></script>
     <script type="text/javascript" src="scripts/tabelas.js"></script>
     <script type="text/javascript">
       let buttonRolar = document.getElementById('rolar');
@@ -204,6 +271,9 @@
       });
 
       executar();
+
+      const VERSAO = '1.1';
+      console.log('versão: ' + VERSAO);
     </script>
   </body>
 </html>
