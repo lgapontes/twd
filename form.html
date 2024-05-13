@@ -1,0 +1,587 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+  <head>
+    <meta charset="utf-8" />
+		<title>The Walking Dead</title>
+		<link rel="icon" href="img/favicon.png" />
+		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <style>
+      * {
+        margin: 0;
+        padding: 0;
+        border: 0;
+        font-size: 1em;
+      }
+      header {
+        display: block;
+        width: 100%;
+        height: 100px;
+        box-shadow: 0 0 8px #000000;
+        margin-bottom: 40px;
+
+        background-color: #382F2F;
+        background-image: url(img/logo.png);
+        background-position: center;
+        background-repeat: no-repeat;
+        background-size: 180px;
+      }
+      main {
+        display: block;
+        width: 600px;
+        max-width: 95%;
+        box-shadow: 0 0 15px #C0C0C0;
+        border-radius: 10px;
+        margin-bottom: 20px;
+        box-sizing: border-box;
+        padding: 10px;
+        margin: 0 auto;
+      }
+      main::after {
+        display: block;
+        height: 0;
+        content: '';
+        clear: both;
+      }
+
+      div.linha {
+        display: block;
+        margin: 0;
+        padding: 0;
+        border: 0;
+        border-bottom: 1px solid #000000;
+        margin-bottom: 10px;
+        padding-bottom: 5px;
+      }
+      div.linha::after {
+        content: '';
+        display: block;
+        clear: both;
+        height: 0;
+      }
+
+      div.calendario {
+        border-top: 1px solid #000000;
+        border-bottom: 0;
+        padding-top: 5px;
+        margin-top: 20px;
+      }
+
+      div.sem-linha {
+        border-top: 0;
+        border-bottom: 0;
+        padding-top: 0;
+        margin-top: 0;
+      }
+
+      div.bloco {
+        display: block;
+        float: right;
+        margin: 0;
+        padding: 0;
+        border: 0;
+      }
+      div.bloco::after {
+        content: '';
+        display: block;
+        clear: both;
+        height: 0;
+      }
+
+      select {
+        display: block;
+        float: right;
+        width: 350px;
+        border: 1px solid #C0C0C0;
+        padding: 4px;
+        text-align: center;
+        font-size: 1.1em;
+        margin: 0;
+      }
+
+      input[type=text] {
+        width: 30px;
+        border: 1px solid #C0C0C0;
+        padding: 4px;
+        margin-bottom: 10px;
+        text-align: center;
+        font-size: 1.1em;
+        margin: 0 5px;
+      }
+
+      input[type=text].calendario {
+        width: 350px;
+        border: 1px solid #C0C0C0;
+        padding: 4px;
+        margin-bottom: 10px;
+        text-align: center;
+        font-size: 1.1em;
+        margin: 0;
+        display: block;
+        float: right;
+      }
+
+      input[type=number].horas {
+        width: 40px;
+        border: 1px solid #C0C0C0;
+        padding: 4px;
+        margin-bottom: 10px;
+        text-align: center;
+        font-size: 1.1em;
+        margin: 0;
+      }
+
+      input[type=number].dias {
+        width: 40px;
+        border: 1px solid #C0C0C0;
+        padding: 4px;
+        margin-bottom: 10px;
+        text-align: center;
+        font-size: 1.1em;
+        margin: 0;
+        margin-left: 20px;
+      }
+
+      h3 {
+        display: block;
+        float: left;
+        color: #b71c1c;
+        font-weight: bold;
+        font-size: 1.5em;
+        text-transform: uppercase;
+        font-family: sans-serif;
+        padding-top: 2px;
+      }
+
+      button.primary {
+        padding: 4px 8px;
+        background-color: #b71c1c;
+        color: #ffffff;
+        font-weight: bold;
+        font-size: 1.1em;
+      }
+
+      button.salvar {
+        padding: 4px 8px;
+        background-color: #b71c1c;
+        color: #ffffff;
+        font-weight: bold;
+        font-size: 1.1em;
+        float: right;
+        margin-top: 20px;
+        margin-left: 10px;
+      }
+
+      button.zerar {
+        padding: 4px 8px;
+        font-weight: bold;
+        font-size: 1.1em;
+        float: right;
+        margin-top: 20px;
+      }
+
+      img.loading {
+        padding: 4px 8px;
+        background-color: #f0f0f0;
+        float: right;
+        margin-top: 20px;
+        margin-right: 10px;
+        box-sizing: border-box;
+        height: 29px;
+
+        display: none;
+      }
+
+      br {
+        clear: both;
+      }
+    </style>
+  </head>
+  <body>
+    <header></header>
+    <input type="hidden" id='tempo' value=''>
+    <input type="hidden" id='estacao' value=''>
+    <input type="hidden" id='contador' value='0'>
+
+    <main>
+      <div class="linha">
+        <h3>GRUPO</h3>
+        <select id="grupo">
+          <option value="twd1">Grupo 1</option>
+          <option value="twd2">Grupo 2</option>
+          <option value="twd3">Grupo 3</option>
+          <option value="twd4">Grupo 4</option>
+        </select>
+      </div>
+
+      <div class="linha">
+        <h3>Swarm Size</h3>
+        <div class='bloco'>
+          <button class="primary" type="button" id="swarm-size-reduzir">Reduzir</button>
+          <input type="text" id='swarm-size' value='0' readonly disabled>
+          <button class="primary" type="button" id="swarm-size-aumentar">Aumentar</button>
+        </div>
+      </div>
+
+      <div class="linha">
+        <h3>Threat Level</h3>
+        <div class='bloco'>
+          <button class="primary" type="button" id="threat-level-reduzir">Reduzir</button>
+          <input type="text" id='threat-level' value='0' readonly disabled>
+          <button class="primary" type="button" id="threat-level-aumentar">Aumentar</button>
+        </div>
+      </div>
+
+      <div class="linha">
+        <h3>Swarm Threat</h3>
+        <div class='bloco'>
+          <button class="primary" type="button" id="swarm-threat-reduzir">Reduzir</button>
+          <input type="text" id='swarm-threat' value='0' readonly disabled>
+          <button class="primary" type="button" id="swarm-threat-aumentar">Aumentar</button>
+        </div>
+      </div>
+
+      <div class="linha calendario">
+        <h3>Calendário</h3>
+        <input class="calendario" type="text" id='calendario-visual' value='' readonly disabled>
+      </div>
+      <div class="linha calendario sem-linha">
+        <h3>Alterar</h3>
+        <input class="calendario" type="text" id='calendario-alterar' value=''>
+      </div>
+      <div class="linha">
+        <input type="number" class="horas" id="horas" value='1' min="1">
+        <button class="primary" type="button" id="adicionar-horas">Add Horas</button>
+
+        <input type="number" class="dias" id="dias" value='1' min="1">
+        <button class="primary" type="button" id="adicionar-dias">Add Dias</button>
+      </div>
+
+      <br>
+      <button class="salvar" type="button" id="salvar">Salvar</button>
+      <button class="zerar" type="button" id="zerar">Zerar</button>
+      <img id="loading" class="loading" src="img/loading.gif">
+    </main>
+
+
+    <script type="text/javascript" src="scripts/moment.min.js"></script>
+    <script type="text/javascript">
+      const DEBUG = true;
+
+      function loadingOn() {
+        document.getElementById('loading').style.display = 'block';
+      }
+
+      function loadingOff() {
+        document.getElementById('loading').style.display = 'none';
+      }
+
+      function salvar(callback) {
+        let grupo = document.getElementById('grupo').options[document.getElementById('grupo').selectedIndex].value;
+
+        let json = {
+          'twd': {
+            'grupo': grupo,
+            'calendario': document.getElementById('calendario-alterar').value,
+            'tempo': document.getElementById('tempo').value,
+            'contador': document.getElementById('contador').value,
+          },
+        };
+        json[grupo] = {
+          'swarm-size': document.getElementById('swarm-size').value,
+          'threat-level': document.getElementById('threat-level').value,
+          'swarm-threat': document.getElementById('swarm-threat').value,
+        };
+
+        fetch(
+          'https://flechamagica.com.br/live/twd.php',
+          {
+            method: 'PUT',
+            headers: {
+              "Content-Type": "application/json; charset=utf-8",
+              'Accept': 'application/json'
+            },
+            body: JSON.stringify(json)
+          }
+        )
+          .then(res => res)
+          .then(response => {
+            if (response.status == 200) {
+              console.log('Salvo com sucesso!');
+              callback();
+            } else {
+              console.log(response);
+              callback();
+            }
+          })
+          .catch(err => {
+            console.error('Erro ao salvar!');
+            callback();
+          });
+      }
+
+      function salvarMudancaDeGrupo(callback) {
+        let grupo = document.getElementById('grupo').options[document.getElementById('grupo').selectedIndex].value;
+
+        let json = {
+          'twd': {
+            'grupo': grupo,
+          },
+        };
+
+        fetch(
+          'https://flechamagica.com.br/live/twd.php',
+          {
+            method: 'PUT',
+            headers: {
+              "Content-Type": "application/json; charset=utf-8",
+              'Accept': 'application/json'
+            },
+            body: JSON.stringify(json)
+          }
+        )
+          .then(res => res)
+          .then(response => {
+            if (response.status == 200) {
+              console.log('Salvo com sucesso!');
+              callback();
+            } else {
+              console.log(response);
+              callback();
+            }
+          })
+          .catch(err => {
+            console.error('Erro ao salvar!');
+            callback();
+          });
+      }
+
+      function carregar(callback) {
+        fetch('https://flechamagica.com.br/live/twd.php')
+          .then(response => response.json())
+          .then(data => {
+              callback(data);
+          });
+      }
+
+      function somarSwarmThreat() {
+        let swarmSize = parseInt(document.getElementById('swarm-size').value);
+        let threatLevel = parseInt(document.getElementById('threat-level').value);
+        document.getElementById('swarm-threat').value = swarmSize + threatLevel;
+      }
+
+      const TEMPOS = {
+        'Primavera': ['Tempo Aberto','Tempo Aberto','Tempo Aberto','Tempo Aberto','Chovendo','Chovendo','Ventando','Ventando','Nublado'],
+        'Verão': ['Tempo Aberto','Tempo Aberto','Tempo Aberto','Tempo Aberto','Tempo Aberto','Chovendo','Ventando','Tempestade','Tempestade'],
+        'Outono': ['Tempo Aberto','Tempo Aberto','Tempo Aberto','Chovendo','Ventando','Nublado'],
+        'Inverno': ['Tempo Aberto','Chovendo','Nevando','Nublado'],
+      };
+
+      function obterTempo(callback) {
+        let tempo = document.getElementById('tempo').value;
+        let contador = parseInt(document.getElementById('contador').value);
+        let estacao = document.getElementById('estacao').value;
+
+        if (tempo == '') {
+          let tempo = TEMPOS[estacao][Math.floor(Math.random() * TEMPOS[estacao].length)];
+          document.getElementById('tempo').value = tempo;
+          callback();
+        } else {
+          contador = contador + 1;
+          document.getElementById('contador').value = contador;
+
+          let sorteio = Math.floor(Math.random() * 10);
+
+          if (sorteio < contador) {
+            document.getElementById('contador').value = '0';
+
+            tempo = TEMPOS[estacao][Math.floor(Math.random() * TEMPOS[estacao].length)];
+            document.getElementById('tempo').value = tempo;
+            callback();
+          } else {
+            callback();
+          }
+        }
+      }
+
+      function estacaoAno(calendario) {
+        let d = calendario.toDate();
+        let seasonArray = [
+            {name: 'Primavera', date: new Date(d.getFullYear(),2,(d.getFullYear() % 4 === 0) ? 19 : 20).getTime()},
+            {name: 'Verão', date: new Date(d.getFullYear(),5,(d.getFullYear() % 4 === 0) ? 20 : 21).getTime()},
+            {name: 'Outono', date: new Date(d.getFullYear(),8,(d.getFullYear() % 4 === 0) ? 22 : 23).getTime()},
+            {name: 'Inverno', date: new Date(d.getFullYear(),11,(d.getFullYear() % 4 === 0) ? 20 : 21).getTime()}
+        ];
+        let season = seasonArray.filter(({ date }) => date <= d).slice(-1)[0] || {name: "Inverno"};
+        return season.name;
+      }
+
+      function formatarCalendario() {
+        let calendario = moment(document.getElementById('calendario-alterar').value);
+        let estacao = document.getElementById('estacao').value;
+        let tempo = document.getElementById('tempo').value;
+
+        document.getElementById('calendario-visual').value = calendario.format('DD/MM/YYYY, HH') + `h, ${estacao}, ${tempo}`;
+        log();
+      }
+
+      function mudarGrupo(json) {
+        let indexGrupo = {
+          'twd1': 0,
+          'twd2': 1,
+          'twd3': 2,
+          'twd4': 3,
+        };
+        let grupo = json['twd']['grupo'];
+        document.getElementById('grupo').selectedIndex = indexGrupo[grupo];
+
+        document.getElementById('swarm-size').value = json[grupo]['swarm-size'];
+        document.getElementById('threat-level').value = json[grupo]['threat-level'];
+        document.getElementById('swarm-threat').value = json[grupo]['swarm-threat'];
+      }
+
+      function iniciar() {
+        loadingOn();
+        carregar(json => {
+          mudarGrupo(json);
+
+          let calendario = moment(json['twd']['calendario']);
+
+          document.getElementById('estacao').value = estacaoAno(calendario);
+          document.getElementById('calendario-alterar').value = calendario.format();
+
+          document.getElementById('tempo').value = json['twd']['tempo'];
+          document.getElementById('contador').value = json['twd']['contador'];
+
+          formatarCalendario();
+          loadingOff();
+        });
+      }
+
+      iniciar();
+
+      function log() {
+        if (DEBUG) {
+          console.log('LOG DOS DADOS:');
+          console.log('Calendario: ' + document.getElementById('calendario-alterar').value);
+          console.log('Contador: ' + document.getElementById('contador').value);
+          console.log('Estação: ' + document.getElementById('estacao').value);
+          console.log('Tempo: ' + document.getElementById('tempo').value);
+          console.log('');
+        }
+      }
+
+      document.getElementById('salvar').addEventListener('click',event=>{
+        event.preventDefault();
+        loadingOn();
+        salvar(()=>{
+          loadingOff();
+        });
+      });
+
+      document.getElementById('zerar').addEventListener('click',event=>{
+        event.preventDefault();
+        loadingOn();
+        document.getElementById('swarm-size').value = '0';
+        document.getElementById('threat-level').value = '0';
+        document.getElementById('swarm-threat').value = '0';
+        document.getElementById('horas').value = '1';
+        document.getElementById('dias').value = '1';
+        salvar(()=>{
+          loadingOff();
+        });
+      });
+
+      document.getElementById('adicionar-horas').addEventListener('click',event=>{
+        event.preventDefault();
+        let horas = parseInt(document.getElementById('horas').value);
+        let calendario = moment(document.getElementById('calendario-alterar').value);
+        calendario.add(horas, 'hours');
+        document.getElementById('calendario-alterar').value = calendario.format();
+
+        obterTempo(()=>{
+          formatarCalendario();
+        });
+      });
+
+      document.getElementById('adicionar-dias').addEventListener('click',event=>{
+        event.preventDefault();
+        let dias = parseInt(document.getElementById('dias').value);
+        let calendario = moment(document.getElementById('calendario-alterar').value);
+        calendario.add(dias, 'days');
+        document.getElementById('calendario-alterar').value = calendario.format();
+
+        obterTempo(()=>{
+          formatarCalendario();
+        });
+      });
+
+      document.getElementById('swarm-size-reduzir').addEventListener('click',event=>{
+        event.preventDefault();
+        let input = document.getElementById('swarm-size');
+        let swarmSize = parseInt(input.value);
+        swarmSize = swarmSize - 1;
+        if (swarmSize < 0) swarmSize = 0;
+        input.value = swarmSize;
+        somarSwarmThreat();
+      });
+
+      document.getElementById('swarm-size-aumentar').addEventListener('click',event=>{
+        event.preventDefault();
+        let input = document.getElementById('swarm-size');
+        let swarmSize = parseInt(input.value);
+        swarmSize = swarmSize + 1;
+        if (swarmSize > 6) swarmSize = 6;
+        input.value = swarmSize;
+        somarSwarmThreat();
+      });
+
+      document.getElementById('threat-level-reduzir').addEventListener('click',event=>{
+        event.preventDefault();
+        let input = document.getElementById('threat-level');
+        let swarmSize = parseInt(input.value);
+        swarmSize = swarmSize - 1;
+        if (swarmSize < 0) swarmSize = 0;
+        input.value = swarmSize;
+        somarSwarmThreat();
+      });
+
+      document.getElementById('threat-level-aumentar').addEventListener('click',event=>{
+        event.preventDefault();
+        let input = document.getElementById('threat-level');
+        let swarmSize = parseInt(input.value);
+        swarmSize = swarmSize + 1;
+        if (swarmSize > 6) swarmSize = 6;
+        input.value = swarmSize;
+        somarSwarmThreat();
+      });
+
+      document.getElementById('swarm-threat-reduzir').addEventListener('click',event=>{
+        event.preventDefault();
+        let input = document.getElementById('swarm-threat');
+        let swarmSize = parseInt(input.value);
+        swarmSize = swarmSize - 1;
+        if (swarmSize < 0) swarmSize = 0;
+        input.value = swarmSize;
+      });
+
+      document.getElementById('swarm-threat-aumentar').addEventListener('click',event=>{
+        event.preventDefault();
+        let input = document.getElementById('swarm-threat');
+        let swarmSize = parseInt(input.value);
+        swarmSize = swarmSize + 1;
+        input.value = swarmSize;
+      });
+
+      document.getElementById('grupo').addEventListener('input',event=>{
+        event.preventDefault();
+        loadingOn();
+        salvarMudancaDeGrupo(()=>{
+          carregar(json => {
+            mudarGrupo(json);
+            loadingOff();
+          });
+        });
+      });
+    </script>
+  </body>
+</html>

@@ -1,0 +1,164 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+  <head>
+    <meta charset="utf-8" />
+		<title>The Walking Dead</title>
+		<link rel="icon" href="img/favicon.png" />
+		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <style>
+      @font-face {
+        font-family: 'deadkansas';
+        src: url('fonts/Dead_Kansas.ttf') format('truetype');
+      }
+
+      * {
+        margin: 0;
+        padding: 0;
+        border: 0;
+        text-align: center;
+      }
+
+      main {
+        display: block;
+        width: 800px;
+        height: 800px;
+        background-image: url(img/circulo_v8_web.png);
+        background-repeat: no-repeat;
+        background-position: 0 0;
+        background-size: 800px 800px;
+      }
+
+      div {
+        position: absolute;
+        width: 800px;
+      }
+
+      div.dead {
+        font-size: 7em;
+        font-family: 'deadkansas', sans-serif;
+        color: #ffffff;
+      }
+
+      div.normal {
+        font-size: 5.3em;
+        font-family: Georgia, serif;
+        font-weight: bold;
+        color: #ffffff;
+      }
+
+      .amarela {
+        color: #f9b233;
+      }
+      .vermelha {
+        color: #ce1f3e;
+      }
+
+      #swarm-threat {
+        top: 170px;
+        color: #f9b233;
+      }
+      #threat-level {
+        width: 330px;
+        top: 430px;
+        text-align: right;
+        font-size: 6em;
+      }
+      #swarm-size {
+        width: 330px;
+        top: 430px;
+        left: 470px;
+        text-align: left;
+        font-size: 6em;
+      }
+
+      #grupo {
+        top: 555px;
+        font-size: 4em;
+      }
+      #calendario {
+        top: 625px;
+      }
+      #detalhes {
+        top: 718px;
+        font-size: 3.4em;
+      }
+    </style>
+  </head>
+  <body>
+    <main>
+      <div id="swarm-threat" class="dead"></div>
+      <div id="threat-level" class="dead"></div>
+      <div id="swarm-size" class="dead"></div>
+
+      <div id="grupo" class="normal">
+        <span id="grupo-texto" class="vermelha">Grupo 1</span>
+      </div>
+      <div id="calendario" class="normal">
+        <span id="calendario-hora" class="amarela"></span>
+        <span id="calendario-dia"></span>
+      </div>
+      <div id="detalhes" class="normal">
+        <span id="estacao" ></span>
+        <span id="tempo" class="amarela"></span>
+      </div>
+    </main>
+
+    <script type="text/javascript" src="scripts/moment.min.js"></script>
+    <script type="text/javascript">
+      const DEBUG = true;
+
+      function carregar(callback) {
+        fetch('https://flechamagica.com.br/live/twd.php')
+          .then(response => response.json())
+          .then(data => {
+              callback(data);
+          });
+      }
+
+      const TEMPOS = {
+        'Primavera': ['Tempo Aberto','Tempo Aberto','Tempo Aberto','Tempo Aberto','Chovendo','Chovendo','Ventando','Ventando','Nublado'],
+        'Verão': ['Tempo Aberto','Tempo Aberto','Tempo Aberto','Tempo Aberto','Tempo Aberto','Chovendo','Ventando','Tempestade','Tempestade'],
+        'Outono': ['Tempo Aberto','Tempo Aberto','Tempo Aberto','Chovendo','Ventando','Nublado'],
+        'Inverno': ['Tempo Aberto','Chovendo','Nevando','Nublado'],
+      };
+
+      function estacaoAno(calendario) {
+        let d = calendario.toDate();
+        let seasonArray = [
+            {name: 'Primavera', date: new Date(d.getFullYear(),2,(d.getFullYear() % 4 === 0) ? 19 : 20).getTime()},
+            {name: 'Verão', date: new Date(d.getFullYear(),5,(d.getFullYear() % 4 === 0) ? 20 : 21).getTime()},
+            {name: 'Outono', date: new Date(d.getFullYear(),8,(d.getFullYear() % 4 === 0) ? 22 : 23).getTime()},
+            {name: 'Inverno', date: new Date(d.getFullYear(),11,(d.getFullYear() % 4 === 0) ? 20 : 21).getTime()}
+        ];
+        let season = seasonArray.filter(({ date }) => date <= d).slice(-1)[0] || {name: "Inverno"};
+        return season.name;
+      }
+
+      function iniciar() {
+        carregar(json => {
+          let calendario = moment(json['twd']['calendario']);
+          let grupo = json['twd']['grupo'];
+          let indexGrupo = {
+            'twd1': 'Grupo 1',
+            'twd2': 'Grupo 2',
+            'twd3': 'Grupo 3',
+            'twd4': 'Grupo 4',
+          };
+
+          document.getElementById('swarm-size').innerHTML = json[grupo]['swarm-size'];
+          document.getElementById('threat-level').innerHTML = json[grupo]['threat-level'];
+          document.getElementById('swarm-threat').innerHTML = json[grupo]['swarm-threat'];
+          document.getElementById('grupo-texto').innerHTML = indexGrupo[grupo];
+          document.getElementById('calendario-hora').innerHTML = calendario.format('HH[H]');
+          document.getElementById('calendario-dia').innerHTML = calendario.format('DD/MM/YYYY');
+          document.getElementById('estacao').innerHTML = `${estacaoAno(calendario)}, `;
+          document.getElementById('tempo').innerHTML = json['twd']['tempo'];
+        });
+      }
+
+      iniciar();
+      setInterval(iniciar,3000);
+
+    </script>
+  </body>
+</html>

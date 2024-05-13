@@ -1,0 +1,15 @@
+update `flecha` set personagem = 'twd1' where id in (92,93,94);
+
+insert into `flecha` (personagem,atributo,valor) values ('twd2','swarm-size','0');
+insert into `flecha` (personagem,atributo,valor) values ('twd2','threat-level','0');
+insert into `flecha` (personagem,atributo,valor) values ('twd2','swarm-threat','0');
+
+insert into `flecha` (personagem,atributo,valor) values ('twd3','swarm-size','0');
+insert into `flecha` (personagem,atributo,valor) values ('twd3','threat-level','0');
+insert into `flecha` (personagem,atributo,valor) values ('twd3','swarm-threat','0');
+
+insert into `flecha` (personagem,atributo,valor) values ('twd4','swarm-size','0');
+insert into `flecha` (personagem,atributo,valor) values ('twd4','threat-level','0');
+insert into `flecha` (personagem,atributo,valor) values ('twd4','swarm-threat','0');
+
+insert into `flecha` (personagem,atributo,valor) values ('twd','grupo','twd1');
