@@ -1,0 +1,319 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+  <head>
+    <meta charset="utf-8" />
+		<title>The Walking Dead</title>
+		<link rel="icon" href="img/favicon.png" />
+		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <style>
+      @font-face {
+        font-family: 'deadkansas';
+        src: url('fonts/Dead_Kansas.ttf') format('truetype');
+      }
+
+      * {
+        margin: 0;
+        padding: 0;
+        border: 0;
+        text-align: center;
+      }
+
+      main {
+        display: block;
+        position: fixed;
+        left: 0;
+        top: 0;
+        width: 1920px;
+        height: 1080px;
+      }
+
+      div.overlay {
+        display: block;
+        position: fixed;
+        left: 0;
+        top: 0;
+        width: 1920px;
+        height: 1080px;
+        background-repeat: no-repeat;
+      }
+
+      div.overlay1 {
+        z-index: 0;
+        /* background-image: url(img/overlay_imagens_v2_web_c.png); */
+      }
+
+      div.overlay2 {
+        z-index: 1;
+        /* background-image: url(img/overlay_imagens_v2_web_a.png); */
+      }
+
+      div.overlay3 {
+        z-index: 10;
+        /* background-image: url(img/overlay_imagens_v2_web_b.png); */
+      }
+
+      div {
+        position: absolute;
+      }
+
+      div.dead {
+        font-size: 3.2em;
+        font-family: 'deadkansas', sans-serif;
+        color: #ffffff;
+        width: 200px;
+        z-index: 3;
+      }
+
+      div.normal {
+        font-size: 5.3em;
+        font-family: Georgia, serif;
+        font-weight: bold;
+        color: #ffffff;
+      }
+
+      .amarela {
+        color: #f9b233;
+      }
+      .vermelha {
+        color: #ce1f3e;
+      }
+
+      #swarm-threat {
+        top: 88px;
+        left: 1618px;
+        color: #f9b233;
+      }
+      #threat-level {
+        top: 216px;
+        left: 1480px;
+        text-align: right;
+        font-size: 2.8em;
+      }
+      #swarm-size {
+        top: 216px;
+        left: 1758px;
+        text-align: left;
+        font-size: 2.8em;
+      }
+
+      #grupo {
+        top: 278px;
+        left: 1536px;
+        font-size: 2em;
+        width: 372px;
+      }
+      #calendario {
+        top: 314px;
+        left: 1536px;
+        width: 372px;
+        font-size: 2em;
+      }
+      #detalhes {
+        top: 354px;
+        left: 1536px;
+        width: 372px;
+        font-size: 1.4em;
+      }
+
+      div.nome {
+        color: #DFDCC9;
+        width: 236px;
+
+        /* background-color: rgba(255, 0, 0, 0.5); */
+      }
+      div.arquetipo {
+        color: #ffffff;
+        width: 165px;
+
+        /* background-color: rgba(255, 0, 0, 0.5); */
+      }
+
+      div.personagem {
+        padding: 0;
+        margin: 0;
+        border: 0;
+        line-height: 46px;
+        font-size: 1.6em;
+
+        font-family: 'deadkansas', sans-serif;
+        color: #ffffff;
+        z-index: 3;
+      }
+
+      #personagem-ana {
+        top: 1008px;
+        left: 40px;
+      }
+
+      #twd-ana-nome {
+        top: 0;
+        left: 0;
+      }
+      #twd-ana-arquetipo {
+        top: 0px;
+        left: 250px;
+      }
+
+      #personagem-jairo {
+        top: 1007px;
+        left: 517px;
+      }
+
+      #twd-jairo-nome {
+        top: 0;
+        left: 0;
+        width: 196px;
+      }
+      #twd-jairo-arquetipo {
+        top: 0px;
+        left: 230px;
+        width: 180px;
+      }
+
+      #personagem-vicenzo {
+        top: 1008px;
+        left: 1468px;
+      }
+
+      #twd-vicenzo-nome {
+        top: 0;
+        left: 0;
+        width: 210px;
+      }
+      #twd-vicenzo-arquetipo {
+        top: 0px;
+        left: 240px;
+        width: 170px;
+      }
+
+      #personagem-oneill {
+        top: 1008px;
+        left: 992px;
+      }
+
+      #twd-oneill-nome {
+        top: 0;
+        left: 0;
+        width: 210px;
+      }
+      #twd-oneill-arquetipo {
+        top: 0px;
+        left: 250px;
+        width: 162px;
+      }
+    </style>
+  </head>
+  <body>
+    <main>
+      <div class="overlay overlay1">
+        <div class="overlay overlay2">
+          <div id="swarm-threat" class="dead"></div>
+          <div id="threat-level" class="dead"></div>
+          <div id="swarm-size" class="dead"></div>
+
+          <div id="grupo" class="normal">
+            <span id="grupo-texto" class="vermelha">Grupo 1</span>
+          </div>
+          <div id="calendario" class="normal">
+            <span id="calendario-hora" class="amarela"></span>
+            <span id="calendario-dia"></span>
+          </div>
+          <div id="detalhes" class="normal">
+            <span id="estacao" ></span>
+            <span id="tempo" class="amarela"></span>
+          </div>
+
+          <div class="personagem" id="personagem-ana">
+            <div id="twd-ana-nome" class="nome"></div>
+            <div id="twd-ana-arquetipo" class="arquetipo"></div>
+          </div>
+
+          <div class="personagem" id="personagem-jairo">
+            <div id="twd-jairo-nome" class="nome"></div>
+            <div id="twd-jairo-arquetipo" class="arquetipo"></div>
+          </div>
+
+          <div class="personagem" id="personagem-oneill">
+            <div id="twd-oneill-nome" class="nome"></div>
+            <div id="twd-oneill-arquetipo" class="arquetipo"></div>
+          </div>
+
+          <div class="personagem" id="personagem-vicenzo">
+            <div id="twd-vicenzo-nome" class="nome"></div>
+            <div id="twd-vicenzo-arquetipo" class="arquetipo"></div>
+          </div>
+
+          <div class="overlay overlay3"></div>
+        </div>
+      </div>
+    </main>
+
+    <script type="text/javascript" src="scripts/moment.min.js"></script>
+    <script type="text/javascript">
+      const DEBUG = true;
+
+      function carregar(callback) {
+        fetch('https://flechamagica.com.br/live/twd.php')
+          .then(response => response.json())
+          .then(data => {
+              callback(data);
+          });
+      }
+
+      const TEMPOS = {
+        'Primavera': ['Tempo Aberto','Tempo Aberto','Tempo Aberto','Tempo Aberto','Chovendo','Chovendo','Ventando','Ventando','Nublado'],
+        'Verão': ['Tempo Aberto','Tempo Aberto','Tempo Aberto','Tempo Aberto','Tempo Aberto','Chovendo','Ventando','Tempestade','Tempestade'],
+        'Outono': ['Tempo Aberto','Tempo Aberto','Tempo Aberto','Chovendo','Ventando','Nublado'],
+        'Inverno': ['Tempo Aberto','Chovendo','Nevando','Nublado'],
+      };
+
+      function estacaoAno(calendario) {
+        let d = calendario.toDate();
+        let seasonArray = [
+            {name: 'Primavera', date: new Date(d.getFullYear(),2,(d.getFullYear() % 4 === 0) ? 19 : 20).getTime()},
+            {name: 'Verão', date: new Date(d.getFullYear(),5,(d.getFullYear() % 4 === 0) ? 20 : 21).getTime()},
+            {name: 'Outono', date: new Date(d.getFullYear(),8,(d.getFullYear() % 4 === 0) ? 22 : 23).getTime()},
+            {name: 'Inverno', date: new Date(d.getFullYear(),11,(d.getFullYear() % 4 === 0) ? 20 : 21).getTime()}
+        ];
+        let season = seasonArray.filter(({ date }) => date <= d).slice(-1)[0] || {name: "Inverno"};
+        return season.name;
+      }
+
+      function iniciar() {
+        carregar(json => {
+          let calendario = moment(json['twd']['calendario']);
+          let grupo = json['twd']['grupo'];
+          let indexGrupo = {
+            'twd1': 'Grupo 1',
+            'twd2': 'Grupo 2',
+            'twd3': 'Grupo 3',
+            'twd4': 'Grupo 4',
+          };
+
+          document.getElementById('swarm-size').innerHTML = json[grupo]['swarm-size'];
+          document.getElementById('threat-level').innerHTML = json[grupo]['threat-level'];
+          document.getElementById('swarm-threat').innerHTML = json[grupo]['swarm-threat'];
+          document.getElementById('grupo-texto').innerHTML = indexGrupo[grupo];
+          document.getElementById('calendario-hora').innerHTML = calendario.format('HH[H]');
+          document.getElementById('calendario-dia').innerHTML = calendario.format('DD/MM/YYYY');
+          document.getElementById('estacao').innerHTML = `${estacaoAno(calendario)}, `;
+          document.getElementById('tempo').innerHTML = json['twd']['tempo'];
+
+          document.getElementById('twd-ana-nome').innerHTML = json['twd-ana']['nome'];
+          document.getElementById('twd-ana-arquetipo').innerHTML = json['twd-ana']['arquetipo'];
+          document.getElementById('twd-jairo-nome').innerHTML = json['twd-jairo']['nome'];
+          document.getElementById('twd-jairo-arquetipo').innerHTML = json['twd-jairo']['arquetipo'];
+          document.getElementById('twd-oneill-nome').innerHTML = json['twd-oneill']['nome'];
+          document.getElementById('twd-oneill-arquetipo').innerHTML = json['twd-oneill']['arquetipo'];
+          document.getElementById('twd-vicenzo-nome').innerHTML = json['twd-vicenzo']['nome'];
+          document.getElementById('twd-vicenzo-arquetipo').innerHTML = json['twd-vicenzo']['arquetipo'];
+
+        });
+      }
+
+      iniciar();
+      setInterval(iniciar,3000);
+
+    </script>
+  </body>
+</html>
