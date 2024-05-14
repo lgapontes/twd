@@ -13,3 +13,17 @@ insert into `flecha` (personagem,atributo,valor) values ('twd4','threat-level','
 insert into `flecha` (personagem,atributo,valor) values ('twd4','swarm-threat','0');
 
 insert into `flecha` (personagem,atributo,valor) values ('twd','grupo','twd1');
+
+------------------
+
+insert into `flecha` (personagem,atributo,valor) values ('twd-oneill','nome','Vini Sky');
+insert into `flecha` (personagem,atributo,valor) values ('twd-oneill','arquetipo','BIKER');
+
+insert into `flecha` (personagem,atributo,valor) values ('twd-ana','nome','Sara Almeida');
+insert into `flecha` (personagem,atributo,valor) values ('twd-ana','arquetipo','NOBODY');
+
+insert into `flecha` (personagem,atributo,valor) values ('twd-jairo','nome','Mary-Kate');
+insert into `flecha` (personagem,atributo,valor) values ('twd-jairo','arquetipo','HOMEMAKER');
+
+insert into `flecha` (personagem,atributo,valor) values ('twd-vicenzo','nome','Largo Lis');
+insert into `flecha` (personagem,atributo,valor) values ('twd-vicenzo','arquetipo','SCIENTIST');
